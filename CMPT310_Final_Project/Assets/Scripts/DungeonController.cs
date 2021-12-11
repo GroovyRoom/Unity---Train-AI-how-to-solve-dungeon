@@ -153,6 +153,7 @@ public class DungeonController : MonoBehaviour
             TombstoneChicken.transform.SetPositionAndRotation(chicken.transform.position, chicken.transform.rotation);
             TombstoneChicken.SetActive(true);
             agent.level++;
+            m_AgentGroup.AddGroupReward(1.5f);
         }
     }
     public void fightLion(EscapeAgent agent)
@@ -168,6 +169,7 @@ public class DungeonController : MonoBehaviour
             TombstoneLion.transform.SetPositionAndRotation(lion.transform.position, lion.transform.rotation);
             TombstoneLion.SetActive(true);
             agent.level++;
+            m_AgentGroup.AddGroupReward(1.5f);
         }
     }
     public void fightDragon(EscapeAgent agent)
