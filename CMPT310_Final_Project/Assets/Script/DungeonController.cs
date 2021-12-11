@@ -19,22 +19,6 @@ public class DungeonController : MonoBehaviour
         public Collider Col;
     }
 
-    [System.Serializable]
-    public class DragonInfo
-    {
-        public DragonNPC Agent;
-        [HideInInspector]
-        public Vector3 StartingPos;
-        [HideInInspector]
-        public Quaternion StartingRot;
-        [HideInInspector]
-        public Rigidbody Rb;
-        [HideInInspector]
-        public Collider Col;
-        public Transform T;
-        public bool IsDead;
-    }
-
     /// <summary>
     /// Max Academy steps before this platform resets
     /// </summary>
@@ -42,11 +26,6 @@ public class DungeonController : MonoBehaviour
     [Header("Max Environment Steps")] public int MaxEnvironmentSteps = 25000;
     private int m_ResetTimer;
 
-    /// <summary>
-    /// The area bounds.
-    /// </summary>
-    [HideInInspector]
-    public Bounds areaBounds;
     /// <summary>
     /// The ground. The bounds are used to spawn the elements.
     /// </summary>
@@ -60,32 +39,29 @@ public class DungeonController : MonoBehaviour
     Renderer m_GroundRenderer;
 
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
-    public List<DragonInfo> DragonsList = new List<DragonInfo>();
     private Dictionary<PushAgentEscape, PlayerInfo> m_PlayerDict = new Dictionary<PushAgentEscape, PlayerInfo>();
     public bool UseRandomAgentRotation = true;
-    public bool UseRandomAgentPosition = true;
+    public bool UseRandomAgentPosition = false;
     PushBlockSettings m_PushBlockSettings;
 
-    private int m_NumberOfRemainingPlayers;
-    public GameObject Key;
-    public GameObject Tombstone;
+    public GameObject TombstoneChicken;
+    public GameObject TombstoneLion;
+    public GameObject TombstoneDragon;
+    public GameObject TombstoneAgent;
+    public GameObject lion;
+    public GameObject chicken;
+    public GameObject food;
+    public GameObject dragon;
+    public GameObject money1;
+    public GameObject money2;
     private SimpleMultiAgentGroup m_AgentGroup;
     void Start()
     {
-
-        // Get the ground's bounds
-        areaBounds = ground.GetComponent<Collider>().bounds;
         // Get the ground renderer so we can change the material when a goal is scored
         m_GroundRenderer = ground.GetComponent<Renderer>();
         // Starting material
         m_GroundMaterial = m_GroundRenderer.material;
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-
-        //Reset Players Remaining
-        m_NumberOfRemainingPlayers = AgentsList.Count;
-
-        //Hide The Key
-        Key.SetActive(false);
 
         // Initialize TeamManager
         m_AgentGroup = new SimpleMultiAgentGroup();
@@ -97,13 +73,6 @@ public class DungeonController : MonoBehaviour
             item.Col = item.Agent.GetComponent<Collider>();
             // Add to team manager
             m_AgentGroup.RegisterAgent(item.Agent);
-        }
-        foreach (var item in DragonsList)
-        {
-            item.StartingPos = item.Agent.transform.position;
-            item.StartingRot = item.Agent.transform.rotation;
-            item.T = item.Agent.transform;
-            item.Col = item.Agent.GetComponent<Collider>();
         }
 
         ResetScene();
@@ -120,68 +89,102 @@ public class DungeonController : MonoBehaviour
         }
     }
 
-    public void TouchedHazard(EscapeAgent agent)
+    public void AgentKilled(EscapeAgent agent)
     {
-        m_NumberOfRemainingPlayers--;
-        if (m_NumberOfRemainingPlayers == 0 || agent.IHaveAKey)
-        {
-            m_AgentGroup.EndGroupEpisode();
-            ResetScene();
-        }
-        else
-        {
-            agent.gameObject.SetActive(false);
-        }
-    }
-
-    public void UnlockDoor()
-    {
-        m_AgentGroup.AddGroupReward(1f);
-        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.goalScoredMaterial, 0.5f));
-
-        print("Unlocked Door");
         m_AgentGroup.EndGroupEpisode();
-
+        agent.gameObject.SetActive(false);
+        TombstoneAgent.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
+        TombstoneAgent.SetActive(true);
         ResetScene();
     }
 
-    public void KilledByBaddie(EscapeAgent agent, Collision baddieCol)
+    public void AgentDamaged(EscapeAgent agent, int damage)
     {
-        baddieCol.gameObject.SetActive(false);
-        m_NumberOfRemainingPlayers--;
-        agent.gameObject.SetActive(false);
-        print($"{baddieCol.gameObject.name} ate {agent.transform.name}");
-
-        //Spawn Tombstone
-        Tombstone.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
-        Tombstone.SetActive(true);
-
-        //Spawn the Key Pickup
-        Key.transform.SetPositionAndRotation(baddieCol.collider.transform.position, baddieCol.collider.transform.rotation);
-        Key.SetActive(true);
+        int newHp = agent.hp - damage;
+        if (newHp > 0)
+        {
+            agent.hp = newHp;
+        }
+        else
+        {
+            agent.hp = 0;
+        }
     }
 
-    /// <summary>
-    /// Use the ground's bounds to pick a random spawn position.
-    /// </summary>
-    public Vector3 GetRandomSpawnPos()
+    public void AgentHealed(EscapeAgent agent, int heal)
     {
-        var foundNewSpawnLocation = false;
-        var randomSpawnPos = Vector3.zero;
-        while (foundNewSpawnLocation == false)
+        int newHp = agent.hp + heal;
+        if (newHp <= 100)
         {
-            var randomPosX = Random.Range(-areaBounds.extents.x * m_PushBlockSettings.spawnAreaMarginMultiplier,
-                areaBounds.extents.x * m_PushBlockSettings.spawnAreaMarginMultiplier);
-
-            var randomPosZ = Random.Range(-areaBounds.extents.z * m_PushBlockSettings.spawnAreaMarginMultiplier,
-                areaBounds.extents.z * m_PushBlockSettings.spawnAreaMarginMultiplier);
-            randomSpawnPos = ground.transform.position + new Vector3(randomPosX, 1f, randomPosZ);
-            if (Physics.CheckBox(randomSpawnPos, new Vector3(2.5f, 0.01f, 2.5f)) == false)
-            {
-                foundNewSpawnLocation = true;
-            }
+            agent.hp = newHp;
+        } else
+        {
+            agent.hp = 100;
         }
-        return randomSpawnPos;
+    }
+
+    public void EatFood(EscapeAgent agent)
+    {
+        food.SetActive(false);
+        AgentHealed(agent, 100);
+    }
+    public void TakeMoney(EscapeAgent agen, Collision moneyCol)
+    {
+        moneyCol.gameObject.SetActive(false);
+        m_AgentGroup.AddGroupReward(1f);
+    }
+    public void fightChicken(EscapeAgent agent)
+    {
+        AgentDamaged(agent, 25);
+        if (agent.hp == 0)
+        {
+            AgentKilled(agent);
+        } else
+        {
+            chicken.gameObject.SetActive(false);
+            TombstoneChicken.transform.SetPositionAndRotation(chicken.transform.position, chicken.transform.rotation);
+            TombstoneChicken.SetActive(true);
+            agent.level++;
+        }
+    }
+    public void fightLion(EscapeAgent agent)
+    {
+        AgentDamaged(agent, 25);
+        if (agent.hp == 0)
+        {
+            AgentKilled(agent);
+        }
+        else
+        {
+            lion.gameObject.SetActive(false);
+            TombstoneLion.transform.SetPositionAndRotation(lion.transform.position, lion.transform.rotation);
+            TombstoneLion.SetActive(true);
+            agent.level++;
+        }
+    }
+    public void fightDragon(EscapeAgent agent)
+    {
+        if (agent.level == 3)
+        {
+            AgentDamaged(agent, 50);
+            if (agent.hp == 0)
+            {
+                AgentKilled(agent);
+            }
+            else
+            {
+                dragon.gameObject.SetActive(false);
+                TombstoneDragon.transform.SetPositionAndRotation(dragon.transform.position, dragon.transform.rotation);
+                TombstoneDragon.SetActive(true);
+                m_AgentGroup.AddGroupReward(5f);
+                m_AgentGroup.EndGroupEpisode();
+                ResetScene();
+            }
+        } else
+        {
+            AgentDamaged(agent, 100);
+            AgentKilled(agent);
+        }
     }
 
     /// <summary>
@@ -194,11 +197,10 @@ public class DungeonController : MonoBehaviour
         m_GroundRenderer.material = m_GroundMaterial;
     }
 
-    public void BaddieTouchedBlock()
+    public void win()
     {
         m_AgentGroup.EndGroupEpisode();
 
-        // Swap ground material for a bit to indicate we scored.
         StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
         ResetScene();
     }
@@ -214,9 +216,6 @@ public class DungeonController : MonoBehaviour
         //Reset counter
         m_ResetTimer = 0;
 
-        //Reset Players Remaining
-        m_NumberOfRemainingPlayers = AgentsList.Count;
-
         //Random platform rot
         var rotation = Random.Range(0, 4);
         var rotationAngle = rotation * 90f;
@@ -225,34 +224,29 @@ public class DungeonController : MonoBehaviour
         //Reset Agents
         foreach (var item in AgentsList)
         {
-            var pos = UseRandomAgentPosition ? GetRandomSpawnPos() : item.StartingPos;
+            //var pos = UseRandomAgentPosition ? GetRandomSpawnPos() : item.StartingPos;
             var rot = UseRandomAgentRotation ? GetRandomRot() : item.StartingRot;
-
-            item.Agent.transform.SetPositionAndRotation(pos, rot);
+            item.Agent.transform.SetPositionAndRotation(new Vector3(0.0f, 0.5f, 0.0f), rot);
             item.Rb.velocity = Vector3.zero;
             item.Rb.angularVelocity = Vector3.zero;
-            item.Agent.MyKey.SetActive(false);
-            item.Agent.IHaveAKey = false;
+            item.Agent.hp = 100;
+            item.Agent.level = 1;
             item.Agent.gameObject.SetActive(true);
             m_AgentGroup.RegisterAgent(item.Agent);
         }
 
-        //Reset Key
-        Key.SetActive(false);
-
         //Reset Tombstone
-        Tombstone.SetActive(false);
+        TombstoneChicken.SetActive(false);
+        TombstoneDragon.SetActive(false);
+        TombstoneLion.SetActive(false);
+        TombstoneAgent.SetActive(false);
 
-        //End Episode
-        foreach (var item in DragonsList)
-        {
-            if (!item.Agent)
-            {
-                return;
-            }
-            item.Agent.transform.SetPositionAndRotation(item.StartingPos, item.StartingRot);
-            item.Agent.SetRandomWalkSpeed();
-            item.Agent.gameObject.SetActive(true);
-        }
+        //Reset other things
+        chicken.SetActive(true);
+        dragon.SetActive(true);
+        lion.SetActive(true);
+        food.SetActive(true);
+        money1.SetActive(true);
+        money2.SetActive(true);
     }
 }
