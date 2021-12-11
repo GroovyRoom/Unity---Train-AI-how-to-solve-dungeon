@@ -120,7 +120,7 @@ public class DungeonController : MonoBehaviour
         }
     }
 
-    public void TouchedHazard(PushAgentEscape agent)
+    public void TouchedHazard(EscapeAgent agent)
     {
         m_NumberOfRemainingPlayers--;
         if (m_NumberOfRemainingPlayers == 0 || agent.IHaveAKey)
@@ -145,7 +145,7 @@ public class DungeonController : MonoBehaviour
         ResetScene();
     }
 
-    public void KilledByBaddie(PushAgentEscape agent, Collision baddieCol)
+    public void KilledByBaddie(EscapeAgent agent, Collision baddieCol)
     {
         baddieCol.gameObject.SetActive(false);
         m_NumberOfRemainingPlayers--;
