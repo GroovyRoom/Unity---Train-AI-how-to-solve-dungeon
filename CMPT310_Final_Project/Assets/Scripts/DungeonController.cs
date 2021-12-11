@@ -238,7 +238,7 @@ public class DungeonController : MonoBehaviour
             Vector3 m_Center = m_Collider.bounds.center;
             m_Center.y += 0.5f;
             var rot = UseRandomAgentRotation ? GetRandomRot() : item.StartingRot;
-            item.Agent.transform.SetPositionAndRotation(new Vector3(0.0f, 0.5f, 0.0f), rot);
+            item.Agent.transform.SetPositionAndRotation(m_Center, rot);
             item.Rb.velocity = Vector3.zero;
             item.Rb.angularVelocity = Vector3.zero;
             item.Agent.hp = 100;
