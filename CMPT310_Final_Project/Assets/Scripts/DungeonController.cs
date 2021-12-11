@@ -117,6 +117,7 @@ public class DungeonController : MonoBehaviour
         {
             agent.hp = 0;
         }
+        agent.healthBar.SetHealth(agent.hp);
     }
 
     public void AgentHealed(EscapeAgent agent, int heal)
@@ -129,6 +130,7 @@ public class DungeonController : MonoBehaviour
         {
             agent.hp = 100;
         }
+        agent.healthBar.SetHealth(agent.hp);
     }
 
     public void EatFood(EscapeAgent agent)
@@ -246,6 +248,7 @@ public class DungeonController : MonoBehaviour
             item.Agent.hp = 100;
             item.Agent.level = 1;
             item.Agent.gameObject.SetActive(true);
+            item.Agent.healthBar.SetHealth(item.Agent.maxHp);
             m_AgentGroup.RegisterAgent(item.Agent);
         }
 
