@@ -30,6 +30,7 @@ public class DungeonController : MonoBehaviour
     /// The ground. The bounds are used to spawn the elements.
     /// </summary>
     public GameObject ground;
+    public Collider m_Collider;
 
     Material m_GroundMaterial; //cached on Awake()
 
@@ -234,7 +235,8 @@ public class DungeonController : MonoBehaviour
         //Reset Agents
         foreach (var item in AgentsList)
         {
-            //var pos = UseRandomAgentPosition ? GetRandomSpawnPos() : item.StartingPos;
+            Vector3 m_Center = m_Collider.bounds.center;
+            m_Center.y += 0.5f;
             var rot = UseRandomAgentRotation ? GetRandomRot() : item.StartingRot;
             item.Agent.transform.SetPositionAndRotation(new Vector3(0.0f, 0.5f, 0.0f), rot);
             item.Rb.velocity = Vector3.zero;
