@@ -35,6 +35,7 @@ TagManager:
   - dragon
   - lock
   - monster
+  - Money
   layers:
   - Default
   - TransparentFX

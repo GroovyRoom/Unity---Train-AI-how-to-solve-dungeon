@@ -3115,7 +3115,7 @@ PrefabInstance:
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.509768
+      value: -0.64
       objectReference: {fileID: 0}
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
@@ -3295,7 +3295,7 @@ GameObject:
   - component: {fileID: 754561778}
   m_Layer: 0
   m_Name: Monsters
-  m_TagString: Untagged
+  m_TagString: monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4654,7 +4654,7 @@ PrefabInstance:
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.752474
+      value: 20.06
       objectReference: {fileID: 0}
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
@@ -4664,7 +4664,7 @@ PrefabInstance:
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.11339
+      value: -7.09
       objectReference: {fileID: 0}
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
@@ -6405,6 +6405,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Props_GoldPile (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1242776226696080, guid: 3283d79c16b08544894c4416b9eecfc8, type: 3}
+      propertyPath: m_TagString
+      value: Money
+      objectReference: {fileID: 0}
     - target: {fileID: 4782122063861334, guid: 3283d79c16b08544894c4416b9eecfc8, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -7323,7 +7327,7 @@ PrefabInstance:
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.285437
+      value: 5.94
       objectReference: {fileID: 0}
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
@@ -7333,7 +7337,7 @@ PrefabInstance:
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.5891094
+      value: -6.93
       objectReference: {fileID: 0}
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
@@ -8848,7 +8852,7 @@ GameObject:
   - component: {fileID: 1766371684}
   m_Layer: 0
   m_Name: Rewards
-  m_TagString: Untagged
+  m_TagString: Money
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8879,6 +8883,10 @@ PrefabInstance:
     - target: {fileID: 1242776226696080, guid: 3283d79c16b08544894c4416b9eecfc8, type: 3}
       propertyPath: m_Name
       value: Props_GoldPile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242776226696080, guid: 3283d79c16b08544894c4416b9eecfc8, type: 3}
+      propertyPath: m_TagString
+      value: Money
       objectReference: {fileID: 0}
     - target: {fileID: 4782122063861334, guid: 3283d79c16b08544894c4416b9eecfc8, type: 3}
       propertyPath: m_RootOrder
@@ -9280,7 +9288,7 @@ PrefabInstance:
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.89008
+      value: -14.39
       objectReference: {fileID: 0}
     - target: {fileID: 390460369537414899, guid: 69a64861a32794a5db3bcea0cae3bef2,
         type: 3}
@@ -10352,7 +10360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4006991767121726}
-  - component: {fileID: 1125451440611344}
+  - component: {fileID: 1125451440611343}
   m_Layer: 0
   m_Name: DungeonEscapePlatform
   m_TagString: Untagged
@@ -10360,51 +10368,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1125451440611344
+--- !u!114 &1125451440611343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125451440611342}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f0d060d8c3074edf80fc69e847d4c60, type: 3}
+  m_Script: {fileID: 11500000, guid: 5288388f649c5904e8033ef2eacf6ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxEnvironmentSteps: 15000
+  MaxEnvironmentSteps: 25000
   areaBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   ground: {fileID: 0}
-  AgentsList:
-  - Agent: {fileID: 4168939714645747684}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
-    Col: {fileID: 0}
-  - Agent: {fileID: 0}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
-    Col: {fileID: 0}
-  - Agent: {fileID: 0}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
-    Col: {fileID: 0}
-  DragonsList:
-  - Agent: {fileID: 0}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
-    Col: {fileID: 0}
-    T: {fileID: 0}
-    IsDead: 0
+  AgentsList: []
+  DragonsList: []
   UseRandomAgentRotation: 1
   UseRandomAgentPosition: 1
   Key: {fileID: 0}
-  Tombstone: {fileID: 6108088255477627722}
+  Tombstone: {fileID: 0}
 --- !u!4 &4006991767121726
 Transform:
   m_ObjectHideFlags: 0
@@ -10763,7 +10749,7 @@ MonoBehaviour:
   onCollisionEnterEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1125451440611344}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: BaddieTouchedBlock
         m_Mode: 1
@@ -11628,7 +11614,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 11400000, guid: b56a13a0e996e4f719001b218cb87d5a, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 1
   m_BehaviorName: DungeonEscape
@@ -12033,7 +12019,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4168939714645747683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.01, y: 0.58, z: -4.7}
+  m_LocalPosition: {x: -0.02, y: 0.58, z: -5.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4165376462432376845}
@@ -12089,9 +12075,7 @@ GameObject:
   - component: {fileID: 4166013638059546853}
   - component: {fileID: 4115311913359973977}
   - component: {fileID: 4055595552429364831}
-  - component: {fileID: 4168939714645747684}
   - component: {fileID: 4122003051461153327}
-  - component: {fileID: 5023450298460718579}
   - component: {fileID: 107387992959792899}
   - component: {fileID: 1752242593111717860}
   m_Layer: 0
@@ -12101,24 +12085,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &4168939714645747684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4168939714645747683}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78c960fbbc7844c269d4d14ae68abfc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  MyKey: {fileID: 0}
-  IHaveAKey: 0
 --- !u!1 &4169057225593349613
 GameObject:
   m_ObjectHideFlags: 0
@@ -12287,20 +12253,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5023450298460718579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4168939714645747683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DecisionPeriod: 5
-  TakeActionsBetweenDecisions: 1
 --- !u!23 &5398619306765992111
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12432,7 +12384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &6126132964558562449
 GameObject:
   m_ObjectHideFlags: 0
@@ -13014,6 +12966,8 @@ GameObject:
   - component: {fileID: 7252038609791026538}
   - component: {fileID: 7252038609791026536}
   - component: {fileID: 7252038609791026537}
+  - component: {fileID: 7252038609791026541}
+  - component: {fileID: 7252038609791026540}
   m_Layer: 0
   m_Name: AgentCube
   m_TagString: Untagged
@@ -13021,6 +12975,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!54 &7252038609791026540
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7252038609791026539}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7252038609791026541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7252038609791026539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9685bac759362440ea71765cdece3305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  walkSpeed: 1
 --- !u!4 &7252038610259830416
 Transform:
   m_ObjectHideFlags: 0
