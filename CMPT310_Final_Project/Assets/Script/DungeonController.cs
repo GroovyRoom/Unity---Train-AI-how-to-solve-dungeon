@@ -95,6 +95,7 @@ public class DungeonController : MonoBehaviour
         agent.gameObject.SetActive(false);
         TombstoneAgent.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
         TombstoneAgent.SetActive(true);
+        lose();
         ResetScene();
     }
 
@@ -177,6 +178,7 @@ public class DungeonController : MonoBehaviour
                 TombstoneDragon.transform.SetPositionAndRotation(dragon.transform.position, dragon.transform.rotation);
                 TombstoneDragon.SetActive(true);
                 m_AgentGroup.AddGroupReward(5f);
+                win();
                 m_AgentGroup.EndGroupEpisode();
                 ResetScene();
             }
@@ -197,12 +199,14 @@ public class DungeonController : MonoBehaviour
         m_GroundRenderer.material = m_GroundMaterial;
     }
 
+    public void lose()
+    {
+        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
+    }
+
     public void win()
     {
-        m_AgentGroup.EndGroupEpisode();
-
-        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
-        ResetScene();
+        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.goalScoredMaterial, 0.5f));
     }
 
     Quaternion GetRandomRot()
